@@ -66,13 +66,32 @@ class ThreeHundredAndFortyTwo {
 }
 
 class ReorderedPowerOfTwo {
-    /** 869) You are given an integer n. We reorder the digits in any order
+    /**
+     * 869) You are given an integer n. We reorder the digits in any order
      * (including the original order) such that the leading digit is not zero.
      * Return true if and only if we can do this so that the resulting
      * number is a power of two.
      */
-    public boolean reorderedPowerOf2(int n) {
-        return true;
+    public static boolean reorderedPowerOf2(int n) {
+        String num = String.valueOf(n);
+        String[] split = num.split("");
+        Arrays.sort(split);
+        int power = 1;
+        for (int i = 0; i < 31; i++) {
+            String str = String.valueOf(power);
+            if (str.length() == num.length()) {
+                String[] pow = str.split("");
+                Arrays.sort(pow);
+                if (Arrays.equals(pow, split)) {
+                    return true;
+                }
+            }
+            if (str.length() > num.length()) {
+                break;
+            }
+            power *= 2;
+        }
+        return false;
     }
 }
 
@@ -82,5 +101,13 @@ public class Tasks {
         ThreeHundredAndTwentySix.isPowerOfThree(9);
         int[] xu = {2, 6, 8, 7, 5};
         TwoSum.twoSum(xu, 10);
+        System.out.println(ReorderedPowerOfTwo.reorderedPowerOf2(1));
+        System.out.println(ReorderedPowerOfTwo.reorderedPowerOf2(10));
+        System.out.println(ReorderedPowerOfTwo.reorderedPowerOf2(16));
+        System.out.println(ReorderedPowerOfTwo.reorderedPowerOf2(24));
+        System.out.println(ReorderedPowerOfTwo.reorderedPowerOf2(46));
+        System.out.println(ReorderedPowerOfTwo.reorderedPowerOf2(368407186));
+        System.out.println(ReorderedPowerOfTwo.reorderedPowerOf2(679213508));
+        System.out.println(ReorderedPowerOfTwo.reorderedPowerOf2(850239671));
     }
 }
