@@ -1,6 +1,5 @@
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.IntStream;
 
 class TwoSum {
     /**
@@ -78,6 +77,54 @@ class AddTwoNumbers {
     }
 }
 
+
+class LongestSubstringWithoutRepeatingCharacters {
+    /**
+     * 3) Given a string s, find the length of the
+     * longest substring without repeating characters.
+     */
+    public static int lengthOfLongestSubstring(String s) {
+        if (s == null || s.length() == 0) return 0;
+        TreeSet<Character> set = new TreeSet<Character>();
+        int result = 1;
+        int j = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!set.contains(c)) {
+                set.add(c);
+                result = Math.max(result, set.size());
+            } else {
+                while (j < i) {
+                    if (s.charAt(j) == c) {
+                        j++;
+                        break;
+                    }
+                    set.remove(s.charAt(j));
+                    j++;
+                }
+            }
+        }
+        return result;
+    }
+}
+
+class MedianOfTwoSortedArrays {
+    /**
+     * 4) Given two sorted arrays nums1 and nums2 of size m and n respectively,
+     * return the median of the two sorted arrays.
+     * The overall run time complexity should be O(log (m+n)).
+     */
+    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int[] arr = IntStream.concat(Arrays.stream(nums1), Arrays.stream(nums2)).toArray();
+        Arrays.sort(arr);
+        if (arr.length % 2 == 0) {
+            return (arr[arr.length / 2] + arr[arr.length / 2 - 1]) / 2.0;
+        } else {
+            return arr[arr.length / 2];
+        }
+    }
+}
+
 class ThreeHundredAndTwentySix {
     /**
      * 326) Given an integer n, return true if it is a power of three. Otherwise, return false.
@@ -110,6 +157,24 @@ class ThreeHundredAndFortyTwo {
         else return false;
     }
 
+}
+
+class PacificAtlanticWaterFlow {
+    /**
+     * 417) There is an m x n rectangular island that borders both the Pacific Ocean and Atlantic Ocean.
+     * The Pacific Ocean touches the island's left and top edges, and the Atlantic Ocean touches
+     * the island's right and bottom edges. The island is partitioned into a grid of square cells.
+     * You are given an m x n integer matrix heights where heights[r][c] represents the height above
+     * sea level of the cell at coordinate (r, c). The island receives a lot of rain, and
+     * the rain water can flow to neighboring cells directly north, south, east, and west if
+     * the neighboring cell's height is less than or equal to the current cell's height.
+     * Water can flow from any cell adjacent to an ocean into the ocean. Return a 2D list of grid
+     * coordinates result where result[i] = [ri, ci] denotes that rain water can flow from cell (ri, ci)
+     * to both the Pacific and Atlantic oceans.
+     */
+    public static List<List<Integer>> pacificAtlantic(int[][] heights) {
+
+    }
 }
 
 class ReorderedPowerOfTwo {
@@ -160,5 +225,6 @@ public class Tasks {
         System.out.println(ReorderedPowerOfTwo.reorderedPowerOf2(679213508));
         System.out.println(ReorderedPowerOfTwo.reorderedPowerOf2(850239671));
 
+        System.out.println(LongestSubstringWithoutRepeatingCharacters.lengthOfLongestSubstring("anjanjll"));
     }
 }
