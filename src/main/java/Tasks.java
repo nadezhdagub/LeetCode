@@ -195,24 +195,37 @@ class AverageOfLevelsInBinaryTree {
      * 637) Given the root of a binary tree, return the average value of the nodes on each level
      * in the form of an array. Answers within 10-5 of the actual answer will be accepted.
      */
+    List<Double> result = new ArrayList<>();
+
     public List<Double> averageOfLevels(TreeNode root) {
-        List<Double> result  = new ArrayList<>();
-        List<TreeNode> nodes = new ArrayList<>();
-        List<TreeNode> childs = new ArrayList<>();
-        nodes.add(root);
-        if(root == null) return result ;
-        double sum = 0.0;
-        for (TreeNode n : nodes) {
-            sum += n.val;
-            if (n.left != null) {
-                childs.add(n.left);
-            }
-            if (n.right != null) {
-                childs.add(n.right);
-            }
-        }
-        result.add(sum / nodes.size());
+
+        if (root == null)
+            return result;
+
+        //call on root first
+        averageOfLevel(Collections.singletonList(root));
         return result;
+    }
+
+    void averageOfLevel(List<TreeNode> nodes) {
+        double sum = 0d;
+        //store all children of current node(s) in list
+        List<TreeNode> childs = new ArrayList<>();
+        for (TreeNode n : nodes) {
+            //sum all node(s) vals
+            sum += n.val;
+            if (n.left != null)
+                childs.add(n.left);
+            if (n.right != null)
+                childs.add(n.right);
+        }
+
+        //add average to shared results
+        result.add(sum / nodes.size());
+
+        //if we had noticed any child from current node(s), recursively call the func again
+        if (childs.size() > 0)
+            averageOfLevel(childs);
     }
 }
 
@@ -247,6 +260,15 @@ class ReorderedPowerOfTwo {
 }
 
 public class Tasks {
+    static TreeNode root;
+
+    static {
+        root = new TreeNode(3);
+        root.left = new TreeNode(9);
+        root.right = new TreeNode(20);
+        root.right.left = new TreeNode(15);
+        root.right.right = new TreeNode(7);
+    }
     public static void main(String[] args) {
         ThreeHundredAndFortyTwo.isPowerOfFour(17);
 
@@ -265,5 +287,7 @@ public class Tasks {
         System.out.println(ReorderedPowerOfTwo.reorderedPowerOf2(850239671));
 
         System.out.println(LongestSubstringWithoutRepeatingCharacters.lengthOfLongestSubstring("anjanjll"));
+
+        System.out.println(new AverageOfLevelsInBinaryTree().averageOfLevels(root));
     }
 }
