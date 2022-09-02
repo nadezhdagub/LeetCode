@@ -172,8 +172,47 @@ class PacificAtlanticWaterFlow {
      * coordinates result where result[i] = [ri, ci] denotes that rain water can flow from cell (ri, ci)
      * to both the Pacific and Atlantic oceans.
      */
-    public static List<List<Integer>> pacificAtlantic(int[][] heights) {
+   /* public static List<List<Integer>> pacificAtlantic(int[][] heights) {
 
+    }*/
+}
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+class AverageOfLevelsInBinaryTree {
+    /**
+     * 637) Given the root of a binary tree, return the average value of the nodes on each level
+     * in the form of an array. Answers within 10-5 of the actual answer will be accepted.
+     */
+    public List<Double> averageOfLevels(TreeNode root) {
+        List<Double> result  = new ArrayList<>();
+        List<TreeNode> nodes = new ArrayList<>();
+        List<TreeNode> childs = new ArrayList<>();
+        nodes.add(root);
+        if(root == null) return result ;
+        double sum = 0.0;
+        for (TreeNode n : nodes) {
+            sum += n.val;
+            if (n.left != null) {
+                childs.add(n.left);
+            }
+            if (n.right != null) {
+                childs.add(n.right);
+            }
+        }
+        result.add(sum / nodes.size());
+        return result;
     }
 }
 
