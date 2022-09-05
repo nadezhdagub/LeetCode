@@ -1,6 +1,8 @@
 import java.util.*;
 import java.util.stream.IntStream;
 
+import static java.lang.Math.max;
+
 class TwoSum {
     /**
      * 1) Given an array of integers nums and an integer target, return indices
@@ -92,7 +94,7 @@ class LongestSubstringWithoutRepeatingCharacters {
             char c = s.charAt(i);
             if (!set.contains(c)) {
                 set.add(c);
-                result = Math.max(result, set.size());
+                result = max(result, set.size());
             } else {
                 while (j < i) {
                     if (s.charAt(j) == c) {
@@ -122,6 +124,32 @@ class MedianOfTwoSortedArrays {
         } else {
             return arr[arr.length / 2];
         }
+    }
+}
+
+class LongestPalindromicSubstring {
+    private static int checkPalindrome(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        return right - left - 1;
+    }
+
+    public static String longestPalindrome(String s) {
+        if (s == null || s.length() < 1) return "";
+        int start = 0, end = 0;
+        int len1 = 0, len2 = 0, len = 0;
+        for (int i = 0; i < s.length(); i++) {
+            len1 = checkPalindrome(s, i, i);
+            len2 = checkPalindrome(s, i, i+1);
+            len = max(len1, len2);
+            if (len > end - start) {
+                start = i - (len - 1) /2;
+                end = i + (len / 2);
+            }
+        }
+        return s.substring(start, end + 1);
     }
 }
 
@@ -172,7 +200,7 @@ class PacificAtlanticWaterFlow {
      * coordinates result where result[i] = [ri, ci] denotes that rain water can flow from cell (ri, ci)
      * to both the Pacific and Atlantic oceans.
      */
-   /* public static List<List<Integer>> pacificAtlantic(int[][] heights) {
+  /*  public static List<List<Integer>> pacificAtlantic(int[][] heights) {
 
     }*/
 }
@@ -181,8 +209,14 @@ class TreeNode {
     int val;
     TreeNode left;
     TreeNode right;
-    TreeNode() {}
-    TreeNode(int val) { this.val = val; }
+
+    TreeNode() {
+    }
+
+    TreeNode(int val) {
+        this.val = val;
+    }
+
     TreeNode(int val, TreeNode left, TreeNode right) {
         this.val = val;
         this.left = left;
@@ -269,6 +303,7 @@ public class Tasks {
         root.right.left = new TreeNode(15);
         root.right.right = new TreeNode(7);
     }
+
     public static void main(String[] args) {
         ThreeHundredAndFortyTwo.isPowerOfFour(17);
 
@@ -289,5 +324,7 @@ public class Tasks {
         System.out.println(LongestSubstringWithoutRepeatingCharacters.lengthOfLongestSubstring("anjanjll"));
 
         System.out.println(new AverageOfLevelsInBinaryTree().averageOfLevels(root));
+
+        System.out.println(LongestPalindromicSubstring.longestPalindrome("babad"));
     }
 }
