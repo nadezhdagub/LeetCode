@@ -1,6 +1,7 @@
 import java.util.*;
 import java.util.stream.IntStream;
 
+import static java.lang.Math.incrementExact;
 import static java.lang.Math.max;
 
 class TwoSum {
@@ -200,9 +201,44 @@ class PacificAtlanticWaterFlow {
      * coordinates result where result[i] = [ri, ci] denotes that rain water can flow from cell (ri, ci)
      * to both the Pacific and Atlantic oceans.
      */
-  /*  public static List<List<Integer>> pacificAtlantic(int[][] heights) {
 
-    }*/
+    public static List<List<Integer>> pacificAtlantic(int[][] heights) {
+        List<List<Integer>> list = new ArrayList<>();
+        if (heights == null && heights.length == 0) return new ArrayList<>();
+        int n = heights.length;
+        int m = heights[0].length;
+        boolean[][] pacific = new boolean[n][m];
+        boolean[][] atlantic = new boolean[n][m];
+        for (int i = 0; i < m; i++) {
+            helper(heights, pacific, Integer.MIN_VALUE, 0, i);
+            helper(heights, atlantic, Integer.MIN_VALUE, n-1, i);
+        }
+        for (int i = 0; i < n; i++) {
+            helper(heights, pacific, Integer.MIN_VALUE, i, 0);
+            helper(heights, atlantic, Integer.MIN_VALUE, i, m-1);
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (pacific[i][j] && atlantic[i][j]) {
+                    list.add(new ArrayList<Integer>());
+                    list.get(list.size() - 1).add(i);
+                    list.get(list.size() - 1).add(j);
+                }
+            }
+        }
+        return list;
+    }
+
+    private static void helper(int[][] heights, boolean[][] visited, int value, int x, int y) {
+        int n = heights.length;
+        int m = heights[0].length;
+        int[][] dir = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
+        if (x < 0 || x >= n || y < 0 || y >= m || visited[x][y] || heights[x][y] < value) return;
+        visited[x][y] = true;
+        for (int[] d : dir) {
+            helper(heights, visited, heights[x][y], x+d[0], y+d[1]);
+        }
+    }
 }
 
 class TreeNode {
@@ -326,5 +362,9 @@ public class Tasks {
         System.out.println(new AverageOfLevelsInBinaryTree().averageOfLevels(root));
 
         System.out.println(LongestPalindromicSubstring.longestPalindrome("babad"));
+
+        int[][] grid = new int[][]{{1, 2, 2, 3, 5}, {3, 2, 3, 4, 4}, {2, 4, 5, 3, 1}, {6, 7, 1, 4, 5}, {5, 1, 1, 2, 4}};
+        System.out.println(PacificAtlanticWaterFlow.pacificAtlantic(grid));
+
     }
 }
