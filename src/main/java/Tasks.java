@@ -154,6 +154,58 @@ class LongestPalindromicSubstring {
     }
 }
 
+class ZigzagConversion {
+    /**
+     * 6) The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this:
+     * (you may want to display this pattern in a fixed font for better legibility)
+     *
+     * P   A   H   N
+     * A P L S I I G
+     * Y   I   R
+     * And then read line by line: "PAHNAPLSIIGYIR"
+     *
+     * Write the code that will take a string and make this conversion given a number of rows:
+     *
+     * string convert(string s, int numRows);
+     *
+     * @param s
+     * @param numRows
+     * @return
+     */
+    public static String convert(String s, int numRows) {
+        if (numRows == 1) return s;
+        List<StringBuilder> list = new ArrayList<>();
+        for (int i = 0; i < numRows; i++) {
+            list.add(new StringBuilder());
+        }
+        int curRow = 0;
+        boolean grid = false;
+        for (char c : s.toCharArray()) {
+            list.get(curRow).append(c);
+            if (curRow == 0 || curRow == numRows - 1) grid = !grid;
+            curRow += grid ? 1 : -1 ;
+        }
+        StringBuilder res = new StringBuilder();
+        for (StringBuilder row : list) res.append(row);
+        return res.toString();
+    }
+}
+
+class ReverseInteger {
+    /**
+     * 7) Given a signed 32-bit integer x, return x with its digits reversed.
+     * If reversing x causes the value to go outside the signed 32-bit
+     * integer range [-231, 231 - 1], then return 0.
+     * Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
+     *
+     // * @param x
+     * @return
+     */
+   /* public int reverse(int x) {
+
+    }*/
+}
+
 class ThreeHundredAndTwentySix {
     /**
      * 326) Given an integer n, return true if it is a power of three. Otherwise, return false.
@@ -366,5 +418,6 @@ public class Tasks {
         int[][] grid = new int[][]{{1, 2, 2, 3, 5}, {3, 2, 3, 4, 4}, {2, 4, 5, 3, 1}, {6, 7, 1, 4, 5}, {5, 1, 1, 2, 4}};
         System.out.println(PacificAtlanticWaterFlow.pacificAtlantic(grid));
 
+        System.out.println(ZigzagConversion.convert("PAYPALISHIRING", 4));
     }
 }
