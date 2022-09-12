@@ -129,6 +129,14 @@ class MedianOfTwoSortedArrays {
 }
 
 class LongestPalindromicSubstring {
+    /**
+     * 5) Given a string s, return the longest palindromic substring in s.
+     *
+     * @param s
+     * @param left
+     * @param right
+     * @return
+     */
     private static int checkPalindrome(String s, int left, int right) {
         while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
             left--;
@@ -197,11 +205,55 @@ class ReverseInteger {
      * If reversing x causes the value to go outside the signed 32-bit
      * integer range [-231, 231 - 1], then return 0.
      * Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
+     * <p>
+     * @param x
      *
-     // * @param x
      * @return
      */
-   /* public int reverse(int x) {
+    public static int reverse(int x) {
+        int xx = 0;
+        int x1 = x;
+        int count1 = 0;
+        int count2 = 0;
+        int res = x;
+        while (x1 != 0) {
+            x1 = x1 / 10;
+            count1 += 1;
+        }
+        while (x != 0) {
+            count2 += 1;
+            xx += x % 10 * Math.pow(10, count1) / Math.pow(10, count2);
+            x = x / 10;
+        }
+        if ((xx >= Math.pow(2, 31) - 1) || (xx <= -1*Math.pow(2, 31))) return 0;
+        else return xx;
+    }
+}
+
+class StringToIntegerAtoi {
+    /**
+     * 8) Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer (similar to C/C++'s atoi function).
+     *
+     * The algorithm for myAtoi(string s) is as follows:
+     *
+     * Read in and ignore any leading whitespace.
+     * Check if the next character (if not already at the end of the string) is '-' or '+'.
+     * Read this character in if it is either. This determines if the final result is negative or positive respectively.
+     * Assume the result is positive if neither is present. Read in next the characters until the next non-digit
+     * character or the end of the input is reached. The rest of the string is ignored.
+     * Convert these digits into an integer (i.e. "123" -> 123, "0032" -> 32).
+     * If no digits were read, then the integer is 0. Change the sign as necessary (from step 2).
+     * If the integer is out of the 32-bit signed integer range [-231, 231 - 1], then clamp the integer so that
+     * it remains in the range. Specifically, integers less than -231 should be clamped to -231,
+     * and integers greater than 231 - 1 should be clamped to 231 - 1. Return the integer as the final result.
+     * Note:
+     *
+     * Only the space character ' ' is considered a whitespace character.
+     * Do not ignore any characters other than the leading whitespace or the rest of the string after the digits.
+    // * @param s
+     * @return
+     */
+  /*  public int myAtoi(String s) {
 
     }*/
 }
@@ -419,5 +471,7 @@ public class Tasks {
         System.out.println(PacificAtlanticWaterFlow.pacificAtlantic(grid));
 
         System.out.println(ZigzagConversion.convert("PAYPALISHIRING", 4));
+        
+        System.out.println(ReverseInteger.reverse(321));
     }
 }
