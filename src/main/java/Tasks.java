@@ -404,8 +404,34 @@ class UTFValidation {
      * @param data
      * @return
      */
-    public boolean validUtf8(int[] data) {
+    public static boolean validUtf8(int[] data) {
+        int number = 0;
+        for (int i = 0; i < data.length; i++) {
 
+            String bin = Integer.toBinaryString(data[i]);
+            bin = bin.length() >=8 ? bin.substring(bin.length() - 8) : "00000000".substring(bin.length() % 8) + bin;
+
+            if (number == 0) {
+                for (int j = 0; j < bin.length(); j++) {
+                    if(bin.charAt(j) == '0') {
+                        break;
+                    }
+                    number += 1;
+                }
+                if (number == 0) {
+                    continue;
+                }
+                if (number > 4 || number == 1) {
+                    return false;
+                }
+            } else {
+                if (!(bin.charAt(0) == '1' && bin.charAt(1) == '0')) {
+                    return false;
+                }
+            }
+            number -= 1;
+        }
+        return number == 0;
     }
 }
 
