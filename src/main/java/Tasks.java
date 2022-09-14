@@ -253,9 +253,95 @@ class StringToIntegerAtoi {
     // * @param s
      * @return
      */
-  /*  public int myAtoi(String s) {
 
-    }*/
+    enum SIGN {
+        POS, NEG, UNKNOWN
+    }
+
+
+    public static int myAtoi(String str) {
+
+        String digits = "0123456789";
+
+        int result = 0;
+
+        str = str.trim();
+
+        if (str.equals("") || str.equals("+") | str.equals("-"))
+            return 0;
+
+        SIGN sign = SIGN.POS;
+
+        if ((str.charAt(0) == '-') || (str.charAt(0) == '+')) {
+
+            if (str.charAt(0) == '-')
+                sign = SIGN.NEG;
+
+            str = str.substring(1);
+
+            if (str.equals(""))
+                return 0;
+        }
+
+        String[] words = str.split(" ");
+
+        str = words[0];
+
+        if (str.equals(""))
+            return 0;
+
+        for (int i = 0; i < str.length(); i++) {
+
+            char ch = str.charAt(i);
+
+            if (digits.indexOf(ch, 0) == -1) {
+
+                str = str.substring(0, i);
+
+                if (str.equals(""))
+                    return 0;
+
+                break;
+            }
+        }
+
+        try {
+            result = Integer.parseInt(str);
+        } catch (Exception e) {
+            if (sign == SIGN.POS)
+                return Integer.MAX_VALUE;
+            else
+                return Integer.MIN_VALUE;
+        }
+
+        return sign == SIGN.POS ? result : -result;
+    }
+}
+
+class PalindromeNumber {
+    /**
+     * 9) Given an integer x, return true if x is palindrome integer.
+     * An integer is a palindrome when it reads the same backward as forward.
+     * For example, 121 is a palindrome while 123 is not.
+     *
+     * @param x
+     * @return
+     */
+    public static boolean isPalindrome(int x) {
+        int xx = 0;
+        int i = 0;
+        int res = x;
+
+        if (x < 0) return false;
+
+        while(x != 0) {
+            xx = x % 10;
+            i = i * 10 + xx;
+            x = x / 10;
+        }
+        if (res == i) return true;
+        else return false;
+    }
 }
 
 class ThreeHundredAndTwentySix {
@@ -289,7 +375,38 @@ class ThreeHundredAndFortyTwo {
         if (n == 1) return true;
         else return false;
     }
+}
 
+class UTFValidation {
+    /**
+     * 393 Given an integer array data representing the data, return whether it is a valid UTF-8 encoding
+     * (i.e. it translates to a sequence of valid UTF-8 encoded characters).
+     *
+     * A character in UTF8 can be from 1 to 4 bytes long, subjected to the following rules:
+     *
+     * For a 1-byte character, the first bit is a 0, followed by its Unicode code.
+     * For an n-bytes character, the first n bits are all one's, the n + 1 bit is 0,
+     * followed by n - 1 bytes with the most significant 2 bits being 10.
+     * This is how the UTF-8 encoding would work:
+     *
+     *      Number of Bytes   |        UTF-8 Octet Sequence
+     *                        |              (binary)
+     *    --------------------+-----------------------------------------
+     *             1          |   0xxxxxxx
+     *             2          |   110xxxxx 10xxxxxx
+     *             3          |   1110xxxx 10xxxxxx 10xxxxxx
+     *             4          |   11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+     * x denotes a bit in the binary form of a byte that may be either 0 or 1.
+     *
+     * Note: The input is an array of integers. Only the least significant 8 bits of each integer
+     * is used to store the data. This means each integer represents only 1 byte of data.
+     *
+     * @param data
+     * @return
+     */
+    public boolean validUtf8(int[] data) {
+
+    }
 }
 
 class PacificAtlanticWaterFlow {
@@ -471,7 +588,11 @@ public class Tasks {
         System.out.println(PacificAtlanticWaterFlow.pacificAtlantic(grid));
 
         System.out.println(ZigzagConversion.convert("PAYPALISHIRING", 4));
-        
+
         System.out.println(ReverseInteger.reverse(321));
+
+        System.out.println(StringToIntegerAtoi.myAtoi("+6574245"));
+
+        System.out.println(PalindromeNumber.isPalindrome(363));
     }
 }
