@@ -576,6 +576,37 @@ class ReorderedPowerOfTwo {
     }
 }
 
+class FindOriginalArrayFromDoubledArray {
+    /**
+     * 2007) An integer array original is transformed into a doubled array changed by appending
+     * twice the value of every element in original, and then randomly shuffling the resulting array.
+     * Given an array changed, return original if changed is a doubled array.
+     * If changed is not a doubled array, return an empty array.
+     * The elements in original may be returned in any order.
+     *
+     * @param changed
+     * @return
+     */
+    public static int[] findOriginalArray(int[] changed) {
+        if (changed.length % 2 != 0) return new int[0];
+        int[] res = new int[changed.length / 2];
+        int j = 0;
+        Map<Integer, Integer> map = new TreeMap<>();
+        for (int x : changed) {
+            map.put(x, map.getOrDefault(x, 0) +1);
+        }
+        for (int x : map.keySet()) {
+            if (map.getOrDefault(2 * x, 0) < map.get(x)) return new int[0];
+            for (int i = 0; i < map.get(2 * x); i++) {
+                res[j++] = x;
+                map.put(2 * x, map.get(2 * x)-1);
+            }
+        }
+        return findOriginalArray(res);
+    }
+
+}
+
 public class Tasks {
     static TreeNode root;
 
@@ -620,5 +651,8 @@ public class Tasks {
         System.out.println(StringToIntegerAtoi.myAtoi("+6574245"));
 
         System.out.println(PalindromeNumber.isPalindrome(363));
+
+        int[] changed = {1, 3, 4, 2, 6, 8};
+        System.out.print(new FindOriginalArrayFromDoubledArray().findOriginalArray(changed));
     }
 }
