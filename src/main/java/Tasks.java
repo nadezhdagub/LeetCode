@@ -588,21 +588,21 @@ class FindOriginalArrayFromDoubledArray {
      * @return
      */
     public static int[] findOriginalArray(int[] changed) {
-        if (changed.length % 2 != 0) return new int[0];
+        if (changed.length % 2 == 1) return new int[0];
         int[] res = new int[changed.length / 2];
         int j = 0;
         Map<Integer, Integer> map = new TreeMap<>();
         for (int x : changed) {
-            map.put(x, map.getOrDefault(x, 0) +1);
+            map.put(x, map.getOrDefault(x, 0) + 1);
         }
         for (int x : map.keySet()) {
             if (map.getOrDefault(2 * x, 0) < map.get(x)) return new int[0];
-            for (int i = 0; i < map.get(2 * x); i++) {
+            for (int i = 0; i < map.get(x); i++) {
                 res[j++] = x;
                 map.put(2 * x, map.get(2 * x)-1);
             }
         }
-        return findOriginalArray(res);
+        return res;
     }
 
 }
