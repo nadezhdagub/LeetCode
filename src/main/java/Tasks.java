@@ -344,6 +344,46 @@ class PalindromeNumber {
     }
 }
 
+class RegularExpressionMatching {
+    /**
+     * 10) Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:
+     *
+     * '.' Matches any single character.​​​​
+     * '*' Matches zero or more of the preceding element.
+     * The matching should cover the entire input string (not partial).
+     * @param s
+     * @param p
+     * @return
+     */
+    public static boolean isMatch(String s, String p) {
+        if(p.isEmpty()) return s.isEmpty();
+        boolean flag = (!s.isEmpty() && (p.charAt(0) == s.charAt(0) || p.charAt(0) == '.'));
+        if(p.length() >=2 && p.charAt(1) == '*') {
+            return (isMatch(s, p.substring(2)) || (flag && isMatch(s.substring(1), p)));
+        }
+        else {
+            return flag && isMatch(s.substring(1), p.substring(1));
+        }
+    }
+}
+
+class WildcardMatching {
+    /**
+     * 44) Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*' where:
+     *
+     * '?' Matches any single character.
+     * '*' Matches any sequence of characters (including the empty sequence).
+     * The matching should cover the entire input string (not partial).
+     * 
+     * @param s
+     * @param p
+     * @return
+     */
+    public static boolean isMatch(String s, String p) {
+
+    }
+}
+
 class ThreeHundredAndTwentySix {
     /**
      * 326) Given an integer n, return true if it is a power of three. Otherwise, return false.
@@ -519,17 +559,14 @@ class AverageOfLevelsInBinaryTree {
         if (root == null)
             return result;
 
-        //call on root first
         averageOfLevel(Collections.singletonList(root));
         return result;
     }
 
     void averageOfLevel(List<TreeNode> nodes) {
         double sum = 0d;
-        //store all children of current node(s) in list
         List<TreeNode> childs = new ArrayList<>();
         for (TreeNode n : nodes) {
-            //sum all node(s) vals
             sum += n.val;
             if (n.left != null)
                 childs.add(n.left);
@@ -537,10 +574,8 @@ class AverageOfLevelsInBinaryTree {
                 childs.add(n.right);
         }
 
-        //add average to shared results
         result.add(sum / nodes.size());
 
-        //if we had noticed any child from current node(s), recursively call the func again
         if (childs.size() > 0)
             averageOfLevel(childs);
     }
@@ -604,7 +639,6 @@ class FindOriginalArrayFromDoubledArray {
         }
         return res;
     }
-
 }
 
 public class Tasks {
@@ -654,5 +688,7 @@ public class Tasks {
 
         int[] changed = {1, 3, 4, 2, 6, 8};
         System.out.print(new FindOriginalArrayFromDoubledArray().findOriginalArray(changed));
+
+        System.out.println(RegularExpressionMatching.isMatch("aa", "a*"));
     }
 }
