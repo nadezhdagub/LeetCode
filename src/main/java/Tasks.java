@@ -385,8 +385,24 @@ class RemoveNthNodeFromEndOfList {
      * @param n
      * @return
      */
-    public ListNode removeNthFromEnd(ListNode head, int n) {
+    public ListNode1 removeNthFromEnd(ListNode1 head, int n) {
+        if (head == null || n == 0 || (head.next == null && n == 1)) return null;
+        int k = 0;
+        ListNode1 temp = head;
+        while (temp != null) {
+            k++;
+            temp = temp.next;
+        }
+        if (k == n) {
+            return head.next;
+        }
+        temp = head;
+        for (int i = 1; i < k-n; i++) {
+            temp = temp.next;
+        }
+        temp.next = temp.next.next;
 
+        return head;
     }
 }
 
