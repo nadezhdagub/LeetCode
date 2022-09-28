@@ -367,6 +367,29 @@ class RegularExpressionMatching {
     }
 }
 
+
+
+class ListNode1 {
+     int val;
+     ListNode1 next;
+     ListNode1() {}
+     ListNode1(int val) { this.val = val; }
+ ListNode1(int val, ListNode1 next) { this.val = val; this.next = next; }
+}
+
+
+class RemoveNthNodeFromEndOfList {
+    /**
+     * 19) Given the head of a linked list, remove the nth node from the end of the list and return its head.
+     * @param head
+     * @param n
+     * @return
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+
+    }
+}
+
 class WildcardMatching {
     /**
      * 44) Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*' where:
@@ -374,13 +397,38 @@ class WildcardMatching {
      * '?' Matches any single character.
      * '*' Matches any sequence of characters (including the empty sequence).
      * The matching should cover the entire input string (not partial).
-     * 
+     *
      * @param s
      * @param p
      * @return
      */
     public static boolean isMatch(String s, String p) {
-
+        int i = 0;
+        int j = 0;
+        int ind = -1;
+        int match = 0;
+        while (i < s.length()) {
+            if (i < s.length() && j < p.length() && (s.charAt(i) == p.charAt(j) || p.charAt(j) == '?')) {
+                i++;
+                j++;
+            }
+            else if (j < p.length() && p.charAt(j) == '*') {
+                ind = j;
+                match = i;
+                j++;
+            }
+            else if (ind != -1) {
+                i = ++match;
+                j = ind + 1;
+            }
+            else {
+                return false;
+            }
+        }
+        while (j < p.length() && p.charAt(j) == '*') {
+            j++;
+        }
+        return j == p.length();
     }
 }
 
@@ -690,5 +738,7 @@ public class Tasks {
         System.out.print(new FindOriginalArrayFromDoubledArray().findOriginalArray(changed));
 
         System.out.println(RegularExpressionMatching.isMatch("aa", "a*"));
+
+        System.out.println(WildcardMatching.isMatch("aaaa","***a") + " T");
     }
 }
