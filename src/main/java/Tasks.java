@@ -151,10 +151,10 @@ class LongestPalindromicSubstring {
         int len1 = 0, len2 = 0, len = 0;
         for (int i = 0; i < s.length(); i++) {
             len1 = checkPalindrome(s, i, i);
-            len2 = checkPalindrome(s, i, i+1);
+            len2 = checkPalindrome(s, i, i + 1);
             len = max(len1, len2);
             if (len > end - start) {
-                start = i - (len - 1) /2;
+                start = i - (len - 1) / 2;
                 end = i + (len / 2);
             }
         }
@@ -166,14 +166,14 @@ class ZigzagConversion {
     /**
      * 6) The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this:
      * (you may want to display this pattern in a fixed font for better legibility)
-     *
+     * <p>
      * P   A   H   N
      * A P L S I I G
      * Y   I   R
      * And then read line by line: "PAHNAPLSIIGYIR"
-     *
+     * <p>
      * Write the code that will take a string and make this conversion given a number of rows:
-     *
+     * <p>
      * string convert(string s, int numRows);
      *
      * @param s
@@ -191,7 +191,7 @@ class ZigzagConversion {
         for (char c : s.toCharArray()) {
             list.get(curRow).append(c);
             if (curRow == 0 || curRow == numRows - 1) grid = !grid;
-            curRow += grid ? 1 : -1 ;
+            curRow += grid ? 1 : -1;
         }
         StringBuilder res = new StringBuilder();
         for (StringBuilder row : list) res.append(row);
@@ -206,8 +206,8 @@ class ReverseInteger {
      * integer range [-231, 231 - 1], then return 0.
      * Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
      * <p>
-     * @param x
      *
+     * @param x
      * @return
      */
     public static int reverse(int x) {
@@ -225,7 +225,7 @@ class ReverseInteger {
             xx += x % 10 * Math.pow(10, count1) / Math.pow(10, count2);
             x = x / 10;
         }
-        if ((xx >= Math.pow(2, 31) - 1) || (xx <= -1*Math.pow(2, 31))) return 0;
+        if ((xx >= Math.pow(2, 31) - 1) || (xx <= -1 * Math.pow(2, 31))) return 0;
         else return xx;
     }
 }
@@ -233,9 +233,9 @@ class ReverseInteger {
 class StringToIntegerAtoi {
     /**
      * 8) Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer (similar to C/C++'s atoi function).
-     *
+     * <p>
      * The algorithm for myAtoi(string s) is as follows:
-     *
+     * <p>
      * Read in and ignore any leading whitespace.
      * Check if the next character (if not already at the end of the string) is '-' or '+'.
      * Read this character in if it is either. This determines if the final result is negative or positive respectively.
@@ -247,10 +247,11 @@ class StringToIntegerAtoi {
      * it remains in the range. Specifically, integers less than -231 should be clamped to -231,
      * and integers greater than 231 - 1 should be clamped to 231 - 1. Return the integer as the final result.
      * Note:
-     *
+     * <p>
      * Only the space character ' ' is considered a whitespace character.
      * Do not ignore any characters other than the leading whitespace or the rest of the string after the digits.
-    // * @param s
+     * // * @param s
+     *
      * @return
      */
 
@@ -334,7 +335,7 @@ class PalindromeNumber {
 
         if (x < 0) return false;
 
-        while(x != 0) {
+        while (x != 0) {
             xx = x % 10;
             i = i * 10 + xx;
             x = x / 10;
@@ -347,40 +348,77 @@ class PalindromeNumber {
 class RegularExpressionMatching {
     /**
      * 10) Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:
-     *
+     * <p>
      * '.' Matches any single character.​​​​
      * '*' Matches zero or more of the preceding element.
      * The matching should cover the entire input string (not partial).
+     *
      * @param s
      * @param p
      * @return
      */
     public static boolean isMatch(String s, String p) {
-        if(p.isEmpty()) return s.isEmpty();
+        if (p.isEmpty()) return s.isEmpty();
         boolean flag = (!s.isEmpty() && (p.charAt(0) == s.charAt(0) || p.charAt(0) == '.'));
-        if(p.length() >=2 && p.charAt(1) == '*') {
+        if (p.length() >= 2 && p.charAt(1) == '*') {
             return (isMatch(s, p.substring(2)) || (flag && isMatch(s.substring(1), p)));
-        }
-        else {
+        } else {
             return flag && isMatch(s.substring(1), p.substring(1));
         }
     }
 }
 
-
+class ContainerWithMostWater {
+    /**
+     * 11) You are given an integer array height of length n. n
+     * There are vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).
+     * Find two lines that together with the x-axis form a container, such that the container contains the most water.
+     * Return the maximum amount of water a container can store.
+     * Notice that you may not slant the container.
+     *
+     * @param height
+     * @return
+     */
+    public int maxArea(int[] height) {
+        int a = 0;
+        int n = height.length;
+        int b = n - 1;
+        int S = 0;
+        while (a != b) {
+            if (height[a] > height[b]) {
+                S = Math.max(S, (b - a) * height[b]);
+                b = b - 1;
+            } else {
+                S = Math.max(S, (b - a) * height[a]);
+                a = a + 1;
+            }
+        }
+        return S;
+    }
+}
 
 class ListNode1 {
-     int val;
-     ListNode1 next;
-     ListNode1() {}
-     ListNode1(int val) { this.val = val; }
- ListNode1(int val, ListNode1 next) { this.val = val; this.next = next; }
+    int val;
+    ListNode1 next;
+
+    ListNode1() {
+    }
+
+    ListNode1(int val) {
+        this.val = val;
+    }
+
+    ListNode1(int val, ListNode1 next) {
+        this.val = val;
+        this.next = next;
+    }
 }
 
 
 class RemoveNthNodeFromEndOfList {
     /**
      * 19) Given the head of a linked list, remove the nth node from the end of the list and return its head.
+     *
      * @param head
      * @param n
      * @return
@@ -397,7 +435,7 @@ class RemoveNthNodeFromEndOfList {
             return head.next;
         }
         temp = head;
-        for (int i = 1; i < k-n; i++) {
+        for (int i = 1; i < k - n; i++) {
             temp = temp.next;
         }
         temp.next = temp.next.next;
@@ -409,7 +447,7 @@ class RemoveNthNodeFromEndOfList {
 class WildcardMatching {
     /**
      * 44) Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*' where:
-     *
+     * <p>
      * '?' Matches any single character.
      * '*' Matches any sequence of characters (including the empty sequence).
      * The matching should cover the entire input string (not partial).
@@ -427,17 +465,14 @@ class WildcardMatching {
             if (i < s.length() && j < p.length() && (s.charAt(i) == p.charAt(j) || p.charAt(j) == '?')) {
                 i++;
                 j++;
-            }
-            else if (j < p.length() && p.charAt(j) == '*') {
+            } else if (j < p.length() && p.charAt(j) == '*') {
                 ind = j;
                 match = i;
                 j++;
-            }
-            else if (ind != -1) {
+            } else if (ind != -1) {
                 i = ++match;
                 j = ind + 1;
-            }
-            else {
+            } else {
                 return false;
             }
         }
@@ -485,23 +520,23 @@ class UTFValidation {
     /**
      * 393 Given an integer array data representing the data, return whether it is a valid UTF-8 encoding
      * (i.e. it translates to a sequence of valid UTF-8 encoded characters).
-     *
+     * <p>
      * A character in UTF8 can be from 1 to 4 bytes long, subjected to the following rules:
-     *
+     * <p>
      * For a 1-byte character, the first bit is a 0, followed by its Unicode code.
      * For an n-bytes character, the first n bits are all one's, the n + 1 bit is 0,
      * followed by n - 1 bytes with the most significant 2 bits being 10.
      * This is how the UTF-8 encoding would work:
-     *
-     *      Number of Bytes   |        UTF-8 Octet Sequence
-     *                        |              (binary)
-     *    --------------------+-----------------------------------------
-     *             1          |   0xxxxxxx
-     *             2          |   110xxxxx 10xxxxxx
-     *             3          |   1110xxxx 10xxxxxx 10xxxxxx
-     *             4          |   11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+     * <p>
+     * Number of Bytes   |        UTF-8 Octet Sequence
+     * |              (binary)
+     * --------------------+-----------------------------------------
+     * 1          |   0xxxxxxx
+     * 2          |   110xxxxx 10xxxxxx
+     * 3          |   1110xxxx 10xxxxxx 10xxxxxx
+     * 4          |   11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
      * x denotes a bit in the binary form of a byte that may be either 0 or 1.
-     *
+     * <p>
      * Note: The input is an array of integers. Only the least significant 8 bits of each integer
      * is used to store the data. This means each integer represents only 1 byte of data.
      *
@@ -513,11 +548,11 @@ class UTFValidation {
         for (int i = 0; i < data.length; i++) {
 
             String bin = Integer.toBinaryString(data[i]);
-            bin = bin.length() >=8 ? bin.substring(bin.length() - 8) : "00000000".substring(bin.length() % 8) + bin;
+            bin = bin.length() >= 8 ? bin.substring(bin.length() - 8) : "00000000".substring(bin.length() % 8) + bin;
 
             if (number == 0) {
                 for (int j = 0; j < bin.length(); j++) {
-                    if(bin.charAt(j) == '0') {
+                    if (bin.charAt(j) == '0') {
                         break;
                     }
                     number += 1;
@@ -562,11 +597,11 @@ class PacificAtlanticWaterFlow {
         boolean[][] atlantic = new boolean[n][m];
         for (int i = 0; i < m; i++) {
             helper(heights, pacific, Integer.MIN_VALUE, 0, i);
-            helper(heights, atlantic, Integer.MIN_VALUE, n-1, i);
+            helper(heights, atlantic, Integer.MIN_VALUE, n - 1, i);
         }
         for (int i = 0; i < n; i++) {
             helper(heights, pacific, Integer.MIN_VALUE, i, 0);
-            helper(heights, atlantic, Integer.MIN_VALUE, i, m-1);
+            helper(heights, atlantic, Integer.MIN_VALUE, i, m - 1);
         }
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
@@ -583,11 +618,11 @@ class PacificAtlanticWaterFlow {
     private static void helper(int[][] heights, boolean[][] visited, int value, int x, int y) {
         int n = heights.length;
         int m = heights[0].length;
-        int[][] dir = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
+        int[][] dir = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
         if (x < 0 || x >= n || y < 0 || y >= m || visited[x][y] || heights[x][y] < value) return;
         visited[x][y] = true;
         for (int[] d : dir) {
-            helper(heights, visited, heights[x][y], x+d[0], y+d[1]);
+            helper(heights, visited, heights[x][y], x + d[0], y + d[1]);
         }
     }
 }
@@ -698,7 +733,7 @@ class FindOriginalArrayFromDoubledArray {
             if (map.getOrDefault(2 * x, 0) < map.get(x)) return new int[0];
             for (int i = 0; i < map.get(x); i++) {
                 res[j++] = x;
-                map.put(2 * x, map.get(2 * x)-1);
+                map.put(2 * x, map.get(2 * x) - 1);
             }
         }
         return res;
@@ -755,6 +790,6 @@ public class Tasks {
 
         System.out.println(RegularExpressionMatching.isMatch("aa", "a*"));
 
-        System.out.println(WildcardMatching.isMatch("aaaa","***a") + " T");
+        System.out.println(WildcardMatching.isMatch("aaaa", "***a") + " T");
     }
 }
