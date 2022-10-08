@@ -440,6 +440,55 @@ class IntegerToRoman {
     }
 }
 
+class RomanToInteger {
+    /**
+     * 13)
+     *
+     * @param s
+     * @return
+     */
+    public static int romanToInt(String s) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("I", 1);
+        map.put("IV", 4);
+        map.put("V", 5);
+        map.put("IX", 9);
+        map.put("X", 10);
+        map.put("XL", 40);
+        map.put("L", 50);
+        map.put("XC", 90);
+        map.put("C", 100);
+        map.put("CD", 400);
+        map.put("D", 500);
+        map.put("CM", 900);
+        map.put("M", 1000);
+
+        int current = 0;
+        for (int i = 0; i < s.length(); i++) {
+            Integer num = null;
+            if (i + 2 <= s.length() && map.containsKey(s.substring(i, i + 2))) {
+                current += map.get(s.substring(i, i + 2));
+                i++;
+            } else if (map.containsKey(s.substring(i, i + 1))) {
+                current += map.get(s.substring(i, i + 1));
+            }
+        }
+        return current;
+    }
+}
+
+class SumClosest {
+    /**
+     * 16) Given an integer array nums of length n and an integer target,
+     * find three integers in nums such that the sum is closest to target.
+     * Return the sum of the three integers.
+     * You may assume that each input would have exactly one solution.
+     */
+    public int threeSumClosest(int[] nums, int target) {
+
+    }
+}
+
 class ListNode1 {
     int val;
     ListNode1 next;
@@ -836,5 +885,7 @@ public class Tasks {
         System.out.println(WildcardMatching.isMatch("aaaa", "***a") + " T");
 
         System.out.println(IntegerToRoman.intToRoman(6));
+
+        System.out.println(RomanToInteger.romanToInt("VII"));
     }
 }
