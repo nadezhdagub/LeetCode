@@ -484,8 +484,25 @@ class SumClosest {
      * Return the sum of the three integers.
      * You may assume that each input would have exactly one solution.
      */
-    public int threeSumClosest(int[] nums, int target) {
-
+    public static int threeSumClosest(int[] nums, int target) {
+        if (nums.length == 0 || nums == null || nums.length < 3 || nums.length > 1000 ||
+        target  < -10000 || target  > 10000) return 0;
+        Arrays.sort(nums);
+        int nearestSum = nums[0] + nums[1] + nums[2];
+        for (int i = 0; i < nums.length-2; i++) {
+            int j = i + 1;
+            int k = nums.length-1;
+            while (j < k) {
+                int sum = nums[i] + nums[j] + nums[k];
+                nearestSum = (Math.abs(sum - target) < Math.abs(nearestSum - target)) ? sum : nearestSum;
+                if (sum > target) {
+                    k--;
+                } else if (sum < target) {
+                    j++;
+                } else return target;
+            }
+        }
+        return nearestSum;
     }
 }
 
