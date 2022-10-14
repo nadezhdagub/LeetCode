@@ -501,6 +501,44 @@ class LongestCommonPrefix {
     }
 }
 
+class ThirtySum {
+    /**
+     * 15) Given an integer array nums, return all the triplets
+     * [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+     * Notice that the solution set must not contain duplicate triplets.
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> threeSum(int[] nums) {
+        Set<List<Integer>> set = new HashSet<>();
+        Arrays.sort(nums);
+        int low = 0;
+        int high = 0;
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            high = nums.length - 1;
+            low = i + 1;
+            while (low < high) {
+                sum = nums[i] + nums[low] + nums[high];
+                if (sum == 0) {
+                    List<Integer> list = new ArrayList<>();
+                    list.add(nums[i]);
+                    list.add(nums[low]);
+                    list.add(nums[high]);
+
+                    set.add(list);
+                    low++;
+                } else if (sum < 0) {
+                    low++;
+                } else {
+                    high--;
+                }
+            }
+        }
+        return new ArrayList<>(set);
+    }
+}
+
 class SumClosest {
     /**
      * 16) Given an integer array nums of length n and an integer target,
