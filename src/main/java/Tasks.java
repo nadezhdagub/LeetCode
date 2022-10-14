@@ -477,6 +477,30 @@ class RomanToInteger {
     }
 }
 
+class LongestCommonPrefix {
+    /**
+     * 14) Write a function to find the longest common prefix string amongst an array of strings.
+     * If there is no common prefix, return an empty string "".
+     *
+     * @param strs
+     * @return
+     */
+    public static String longestCommonPrefix(String[] strs) {
+        if (strs == null || strs.length == 0) return "";
+        if (strs.length == 1) return strs[0];
+
+        for (int i = 0; i < strs[0].length(); i++) {
+            char c = strs[0].charAt(i);
+            for (int j = 0; j < strs.length; j++) {
+                if (i == strs[j].length() || strs[j].charAt(i) != c) {
+                    return strs[0].substring(0, i);
+                }
+            }
+        }
+        return strs[0];
+    }
+}
+
 class SumClosest {
     /**
      * 16) Given an integer array nums of length n and an integer target,
@@ -486,12 +510,12 @@ class SumClosest {
      */
     public static int threeSumClosest(int[] nums, int target) {
         if (nums.length == 0 || nums == null || nums.length < 3 || nums.length > 1000 ||
-        target  < -10000 || target  > 10000) return 0;
+                target < -10000 || target > 10000) return 0;
         Arrays.sort(nums);
         int nearestSum = nums[0] + nums[1] + nums[2];
-        for (int i = 0; i < nums.length-2; i++) {
+        for (int i = 0; i < nums.length - 2; i++) {
             int j = i + 1;
-            int k = nums.length-1;
+            int k = nums.length - 1;
             while (j < k) {
                 int sum = nums[i] + nums[j] + nums[k];
                 nearestSum = (Math.abs(sum - target) < Math.abs(nearestSum - target)) ? sum : nearestSum;
