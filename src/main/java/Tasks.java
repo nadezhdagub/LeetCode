@@ -911,6 +911,34 @@ class FindOriginalArrayFromDoubledArray {
     }
 }
 
+class DeleteTheMiddleNodeOfALinkedList {
+    /**
+     * 2095) You are given the head of a linked list. Delete the middle node,
+     * and return the head of the modified linked list.
+     * The middle node of a linked list of size n is the ⌊n / 2⌋th node
+     * from the start using 0-based indexing, where ⌊x⌋ denotes the largest integer less than or equal to x.
+     * For n = 1, 2, 3, 4, and 5, the middle nodes are 0, 1, 1, 2, and 2, respectively.
+     * @param head
+     * @return
+     */
+    public ListNode deleteMiddle(ListNode head) {
+        if (head.next == null) return null;
+        int count = 0;
+        ListNode list1 = head, list2 = head;
+
+        while (list1 != null) {
+            count += 1;
+            list1 = list1.next;
+        }
+
+        for (int i = 0; i < count / 2 - 1; i++) {
+            list2 = list2.next;
+        }
+        list2.next = list2.next.next;
+        return head;
+    }
+}
+
 public class Tasks {
     static TreeNode root;
 
