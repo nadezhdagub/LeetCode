@@ -568,6 +568,49 @@ class SumClosest {
     }
 }
 
+class LetterCombinationsOfAPhoneNumber {
+    /**
+     * 17) Given a string containing digits from 2-9 inclusive,
+     * return all possible letter combinations that the number could represent.
+     * Return the answer in any order.
+     * A mapping of digits to letters (just like on the telephone buttons)
+     * is given below. Note that 1 does not map to any letters.
+     *
+     * @param digits
+     * @return
+     */
+    List<String> list = new ArrayList<>();
+    Map<String, String> map = new HashMap<>(){{
+        put("2", "abc");
+        put("3", "def");
+        put("4", "ghi");
+        put("5", "jkl");
+        put("6", "mno");
+        put("7", "pqrs");
+        put("8", "tuv");
+        put("9","wxyz");
+    }};
+
+    public List<String> letterCombinations(String digits) {
+
+        if (digits == null || digits.length() == 0) return new ArrayList<>();
+        else {backtrack("", digits);}
+        return list;
+    }
+    public void backtrack(String combination, String nextDigits){
+        if(nextDigits.length() == 0){
+            list.add(combination);
+        }else{
+            String digit = nextDigits.substring(0, 1);
+            String letters = map.get(digit);
+            for (int i = 0; i < letters.length(); i++) {
+                String letter = letters.substring(i, i + 1);
+                backtrack(combination + letter, nextDigits.substring(1));
+            }
+        }
+    }
+}
+
 class ListNode1 {
     int val;
     ListNode1 next;
