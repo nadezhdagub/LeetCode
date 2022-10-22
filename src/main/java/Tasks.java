@@ -611,6 +611,52 @@ class LetterCombinationsOfAPhoneNumber {
     }
 }
 
+class FourSum {
+    /**
+     * 18) Given an array numsn of integers, return an array
+     * of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:
+     *
+     * 0 <= a, b, c, d < n
+     * a, b, c, and d are distinct.
+     * nums[a] + nums[b] + nums[c] + nums[d] == target
+     * You may return the answer in any order.
+     * @param nums
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        Arrays.sort(nums);
+        return sum(nums, target, 0, 4);
+    }
+    private List<List<Integer>> sum(int[] nums, int target, int start, int k) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (start == nums.length) return res;
+        int average_value = target / k;
+        if (nums[start] > average_value || average_value > nums[nums.length - 1]) return res;
+        if (k == 2) return evenSum(nums, target, start);
+        for (int i = 0; i < nums.length; i++) {
+            if (i == start || nums[i - 1] !=nums[i]) {
+                for (List<Integer> list : sum(nums, target - nums[i], i + 1, k - 1)) {
+                    res.add(new ArrayList<>(Arrays.asList(nums[i])));
+                    res.get(res.size() - 1).addAll(list);
+                }
+            }
+        }
+        return res;
+    }
+    private List<List<Integer>> evenSum(int[] nums, int target, int start) {
+        List<List<Integer>> res = new ArrayList<>();
+        int index1 = start, index2 = nums.length - 1;
+        while (index1 != nums.length-1) {
+            int currSum = nums[index1] + nums[index2];
+            if (currSum < target || (index1 > start && nums[index1] == nums[index1-1])) index1++;
+            else if (currSum > target || (index2 < nums.length -1 && nums[index2] == nums[index2 + 1])) index2--;
+            else res.add(Arrays.asList(nums[index1++], nums[index2--]));
+        }
+        return res;
+    }
+}
+
 class ListNode1 {
     int val;
     ListNode1 next;
