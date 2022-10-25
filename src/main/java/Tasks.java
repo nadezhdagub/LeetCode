@@ -1,7 +1,6 @@
 import java.util.*;
 import java.util.stream.IntStream;
 
-import static java.lang.Math.incrementExact;
 import static java.lang.Math.max;
 
 class TwoSum {
@@ -716,29 +715,68 @@ class ValidParentheses {
      * @param s
      * @return
      */
-    public boolean isValid(String s) {
+    public static boolean isValid(String s) {
         if (s.length() <= 1) return false;
         Map<Character, Character> map = new HashMap<>();
-        map.put(')', '(');
-        map.put(']', '[');
-        map.put('}', '{');
+        map.put('(', ')');
+        map.put('[', ']');
+        map.put('{', '}');
         List<Character> list = new ArrayList<>();
-        for (int i = 0; i < s.length(); i++) {
+        int slen = s.length();
+        for (int i = 0; i < slen; i++) {
             char currChar = s.charAt(i);
-            if (!map.containsKey(currChar)) {
+            if (map.containsKey(currChar) ) {
                 list.add(currChar);
+            } else if (map.values().contains(currChar)) {
+                if (!list.isEmpty() && map.get(list.get(list.size()-1)) == currChar)
+                list.remove(list.size()-1);
+            }
+            else {
+                return false;
+            }
+        }
+        int count1 = 0, count2 = 0, count3 = 0,count4 = 0,count5 = 0,count6 = 0;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i) == '(') ++count1;
+            if (list.get(i) == ')') ++count2;
+            if (list.get(i) == '[') ++count3;
+            if (list.get(i) == ']') ++count4;
+            if (list.get(i) == '{') ++count5;
+            if (list.get(i) == '}') ++count6;
+            if (count1 % 2 !=0 || count2 % 2 !=0
+                    || count3 % 2 !=0 || count4 % 2 !=0
+                    || count5 % 2 !=0 || count6 % 2 !=0) return false;
+        }
+        return list.isEmpty();
+    }
+
+    public boolean isValid2(String s) {
+        int sLen = s.length();
+        if (sLen <= 1) {
+            return false;
+        }
+        Map<Character, Character> popMap = Map.of(
+                ')','(',
+                ']','[',
+                '}', '{'
+        );
+        Stack<Character> stack = new Stack<>();
+        for (int pos = 0; pos < sLen; pos++) {
+            char currentChar = s.charAt(pos);
+            if (!popMap.containsKey(currentChar)) {
+                stack.push(currentChar);
             } else {
-                char matchChar = map.get(currChar);
-                if (list.isEmpty()) {
+                char matchChar = popMap.get(currentChar);
+                if (stack.isEmpty()) {
                     return false;
                 }
-                char topchar = list.pop();
-                if (matchChar != topchar) {
+                char topChar = stack.pop();
+                if (matchChar != topChar) {
                     return false;
                 }
             }
         }
-        return true;
+        return stack.isEmpty();
     }
 }
 
@@ -1121,5 +1159,6 @@ public class Tasks {
         System.out.println(IntegerToRoman.intToRoman(6));
 
         System.out.println(RomanToInteger.romanToInt("VII"));
+        System.out.println(ValidParentheses.isValid("(){}[]"));
     }
 }
