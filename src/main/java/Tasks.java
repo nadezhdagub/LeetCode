@@ -634,8 +634,8 @@ class FourSum {
         int average_value = target / k;
         if (nums[start] > average_value || average_value > nums[nums.length - 1]) return res;
         if (k == 2) return evenSum(nums, target, start);
-        for (int i = 0; i < nums.length; i++) {
-            if (i == start || nums[i - 1] !=nums[i]) {
+        for (int i = start; i < nums.length; ++i) {
+            if (i == start || nums[i - 1] != nums[i]) {
                 for (List<Integer> list : sum(nums, target - nums[i], i + 1, k - 1)) {
                     res.add(new ArrayList<>(Arrays.asList(nums[i])));
                     res.get(res.size() - 1).addAll(list);
@@ -647,7 +647,7 @@ class FourSum {
     private List<List<Integer>> evenSum(int[] nums, int target, int start) {
         List<List<Integer>> res = new ArrayList<>();
         int index1 = start, index2 = nums.length - 1;
-        while (index1 != nums.length-1) {
+        while (index1 < index2) {
             int currSum = nums[index1] + nums[index2];
             if (currSum < target || (index1 > start && nums[index1] == nums[index1-1])) index1++;
             else if (currSum > target || (index2 < nums.length -1 && nums[index2] == nums[index2 + 1])) index2--;
@@ -701,6 +701,44 @@ class RemoveNthNodeFromEndOfList {
         temp.next = temp.next.next;
 
         return head;
+    }
+}
+
+class ValidParentheses {
+    /**
+     * 20) Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+     *
+     * An input string is valid if:
+     *
+     * Open brackets must be closed by the same type of brackets.
+     * Open brackets must be closed in the correct order.
+     * Every close bracket has a corresponding open bracket of the same type.
+     * @param s
+     * @return
+     */
+    public boolean isValid(String s) {
+        if (s.length() <= 1) return false;
+        Map<Character, Character> map = new HashMap<>();
+        map.put(')', '(');
+        map.put(']', '[');
+        map.put('}', '{');
+        List<Character> list = new ArrayList<>();
+        for (int i = 0; i < s.length(); i++) {
+            char currChar = s.charAt(i);
+            if (!map.containsKey(currChar)) {
+                list.add(currChar);
+            } else {
+                char matchChar = map.get(currChar);
+                if (list.isEmpty()) {
+                    return false;
+                }
+                char topchar = list.pop();
+                if (matchChar != topchar) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
 
